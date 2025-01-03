@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reminder</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+      font-family: Arial, sans-serif;
+    }
+
+    .popup-box {
+      background: #1a202c;
+      color: #cbd5e0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+
+    .popup-header {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .popup-body {
+      margin-bottom: 20px;
+      font-size: 1em;
+    }
+
+    .popup-footer button {
+      padding: 10px 20px;
+      background: #3182ce;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .popup-footer button:hover {
+      background: #2b6cb0;
+    }
+  </style>
+</head>
+<body>
+  <div id="popup" class="popup-box">
+    <div class="popup-header">API Token Reminder</div>
+    <div class="popup-body">
+      <p>
+        Please set your API token for SnailyCAD.<br />
+        1. Go to the CAD URL.<br />
+        2. Log in and click your profile logo.<br />
+        3. Select 'Account' -> 'User API Token'.<br />
+        4. Save and copy the token.<br />
+        5. Return to FiveM and use /sn-auth to paste the token.
+      </p>
+    </div>
+    <div class="popup-footer">
+      <button id="closePopup">Close</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("closePopup").addEventListener("click", function () {
+      fetch(`https://${GetParentResourceName()}/closePopup`, {
+        method: "POST",
+      });
+    });
+  </script>
+</body>
+</html>

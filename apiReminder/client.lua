@@ -1,4 +1,4 @@
-local reminderInterval = 60000 -- 60 seconds
+local reminderInterval = 1000-- 60 seconds
 local popupVisible = false
 
 -- Show Popup

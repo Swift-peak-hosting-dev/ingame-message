@@ -5,8 +5,8 @@ local popupVisible = false
 local function showPopup()
     if not popupVisible then
         popupVisible = true
-        SetNuiFocus(true, true) -- Enable mouse and keyboard input
-        SendNUIMessage({ action = "openPopup" }) -- Trigger NUI popup
+        SetNuiFocus(true, true) -- Enable mouse/keyboard input to NUI
+        SendNUIMessage({ action = "openPopup" })
     end
 end
 
@@ -17,7 +17,7 @@ RegisterNUICallback("closePopup", function(data, cb)
     cb("ok")
 end)
 
--- Periodic Reminder
+-- Periodic Reminder Thread
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(reminderInterval)

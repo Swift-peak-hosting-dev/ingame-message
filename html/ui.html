@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API Reminder</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind (optional) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
   <style>
     body {
       margin: 0;
       padding: 0;
       height: 100vh;
-      display: flex;
+      display: none; /* We'll switch to flex when "openPopup" is received */
       justify-content: center;
       align-items: center;
       background: rgba(0, 0, 0, 0.7);
@@ -70,10 +74,21 @@
   </div>
 
   <script>
-    document.getElementById("closePopup").addEventListener("click", function () {
-      fetch(`https://${GetParentResourceName()}/closePopup`, {
-        method: "POST",
-      });
+    // Listen for Lua's "SendNUIMessage({ action = 'openPopup' })"
+    window.addEventListener("message", (event) => {
+      if (event.data.action === "openPopup") {
+        // Show the popup
+        document.body.style.display = "flex";
+      }
+    });
+
+    // Close button -> POST "closePopup" callback
+    document.getElementById("closePopup").addEventListener("click", () => {
+      fetch(`https://${GetParentResourceName()}/closePopup`, { method: "POST" })
+        .catch((err) => console.error("closePopup fetch error:", err));
+
+      // Immediately hide the popup so the user sees it disappear
+      document.body.style.display = "none";
     });
   </script>
 </body>
